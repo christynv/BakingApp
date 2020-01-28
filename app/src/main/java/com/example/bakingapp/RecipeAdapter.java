@@ -18,9 +18,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CardViewHo
     private String TAG = RecipeAdapter.class.getSimpleName();
     private List<Recipe> recipeList;
     private Recipe recipe;
+    private final ListItemClickListener mOnClickListener;
 
-    public RecipeAdapter(List<Recipe> recipeList) {
+    public interface ListItemClickListener {
+        void onListItemClick(Recipe recipe);
+    }
+
+    public RecipeAdapter(List<Recipe> recipeList, ListItemClickListener listener) {
         this.recipeList = recipeList;
+        mOnClickListener = listener;
     }
     @Override
     public CardViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -55,8 +61,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.CardViewHo
             recipeNameView = itemView.findViewById(R.id.tv_recipe_name);
         }
 
-        void bind(Recipe recipe) {
+        void bind(final Recipe recipe) {
             recipeNameView.setText(recipe.getRecipeName());
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    mOnClickListener.onListItemClick(recipe);
+                }
+            });
         }
     }
 }

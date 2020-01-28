@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +21,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements RecipeAdapter.ListItemClickListener {
 
     private String TAG = MainActivity.class.getSimpleName();
 
@@ -41,6 +43,17 @@ public class MainActivity extends AppCompatActivity {
         recipeRecyclerView.setLayoutManager(layoutManager);
 
         new getRecipes().execute();
+    }
+
+    @Override
+    public void onListItemClick(Recipe recipe) {
+        Intent intent = new Intent(this, RecipeDetail.class);
+        intent.putExtra(RecipeDetail.RECIPE_QUANTITY, recipe.getQuantity().toString());
+        intent.putExtra(RecipeDetail.RECIPE_MEASURE, recipe.getMeasure().toString());
+        intent.putExtra(RecipeDetail.RECIPE_INGREDIENT, recipe.getIngredient().toString());
+        intent.putExtra(RecipeDetail.RECIPE_DESCRIPTION, recipe.getDescription().toString());
+        startActivity(intent);
+
     }
 
     private class getRecipes extends AsyncTask<Void, Void, Void> {
@@ -67,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (recipeAdapter == null) {
-                recipeAdapter = new RecipeAdapter(recipeList);
+                recipeAdapter = new RecipeAdapter(recipeList, MainActivity.this);
                 recipeRecyclerView.setAdapter(recipeAdapter);
             }
         }
