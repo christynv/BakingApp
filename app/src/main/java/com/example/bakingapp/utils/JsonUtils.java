@@ -2,6 +2,7 @@ package com.example.bakingapp.utils;
 
 import android.util.Log;
 
+import com.example.bakingapp.model.Ingredient;
 import com.example.bakingapp.model.Recipe;
 
 import org.json.JSONArray;
@@ -20,13 +21,9 @@ public class JsonUtils {
         Recipe recipe;
         List<Recipe> recipeList = new ArrayList<>();
         JSONObject detailsJSON;
-        int recipeID = 0;
         String recipeName = null;
-        List<Double> quantityList = new ArrayList<>();
-        List<String> measureList = new ArrayList<>();
-        List<String> ingredientList = new ArrayList<>();
-        List<String> descriptionList = new ArrayList<>();
-        List<String> videoURLList = new ArrayList<>();
+        List<String> descriptionList = null;
+        List<String> videoURLList = null;
         String thumbnailURL = null;
         int servings = 0;
 
@@ -41,22 +38,9 @@ public class JsonUtils {
                 recipe = new Recipe();
                 recipe.setRecipeName(recipeName);
 
-                JSONArray ingredientsArray = detailsJSON.getJSONArray("ingredients");
-                for (int i = 0; i < ingredientsArray.length(); i++) {
-                    JSONObject ingredients = ingredientsArray.getJSONObject(i);
-                    quantityList.add(i, ingredients.getDouble("quantity"));
-                    measureList.add(i, ingredients.getString("measure"));
-                    ingredientList.add(i, ingredients.getString("ingredient"));
-                }
-
-                recipe.setQuantity(quantityList);
-                Log.e(TAG, "Quantity: " + recipe.getQuantity().get(0));
-                recipe.setMeasure(measureList);
-                Log.e(TAG, "Measure: " + recipe.getMeasure().get(0));
-                recipe.setIngredient(ingredientList);
-                Log.e(TAG, "Ingredient: " + recipe.getIngredient().get(0));
-
                 JSONArray stepsArray = detailsJSON.getJSONArray("steps");
+                descriptionList = new ArrayList<>();
+                videoURLList = new ArrayList<>();
                 for (int j = 0; j < stepsArray.length(); j++) {
                     JSONObject steps = stepsArray.getJSONObject(j);
                     descriptionList.add(j, steps.getString("description"));
@@ -77,5 +61,51 @@ public class JsonUtils {
         }
 
         return recipeList;
+    }
+
+    public static List<Ingredient> parseIngredientJson(String json) {
+
+        List<Ingredient> ingredientList = new ArrayList<>();
+        JSONObject detailsJSON;
+        /*List<Double> quantity = null;
+        List<String> measure = null;
+        List<String> ingredient = null*/
+
+        double quantity;
+        String measure;
+        String ingredient;
+
+        try {
+            JSONArray fullArray = new JSONArray(json);
+
+            for (int a = 0; a < fullArray.length(); a++) {
+                detailsJSON = fullArray.getJSONObject(a);
+
+                JSONArray ingredientsArray = detailsJSON.getJSONArray("ingredients");
+
+                for (int i = 0; i < ingredientsArray.length(); i++) {
+                    JSONObject ingredients = ingredientsArray.getJSONObject(i);
+                    /*quantity.add(i, ingredients.getDouble("quantity"));
+                    measure.add(ingredients.getString("measure"));
+                    ingredient.add(ingredients.getString("ingredient"));*/
+
+                    quantity = ingredients.getDouble("quantity");
+                    measure = ingredients.getString("measure");
+                    ingredient = ingredients.getString("ingredient");
+
+                    Ingredient ingredientsModel = new Ingredient();
+                    ingredientsModel.setQuantity(quantity);
+                    ingredientsModel.setMeasure(measure);
+                    ingredientsModel.setIngredient(ingredient);
+
+                    ingredientList.add(i, ingredientsModel);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return ingredientList;
     }
 }

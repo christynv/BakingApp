@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.example.bakingapp.model.Ingredient;
 import com.example.bakingapp.model.Recipe;
 import com.example.bakingapp.utils.JsonUtils;
 import com.example.bakingapp.utils.NetworkUtils;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity
 
     private String TAG = MainActivity.class.getSimpleName();
 
-    private static final String RECIPE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+    public static final String RECIPE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
     private RecyclerView recipeRecyclerView;
     private LinearLayoutManager layoutManager;
     private Recipe recipe;
@@ -48,10 +49,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListItemClick(Recipe recipe) {
         Intent intent = new Intent(this, RecipeDetail.class);
-        intent.putExtra(RecipeDetail.RECIPE_QUANTITY, recipe.getQuantity().toString());
-        intent.putExtra(RecipeDetail.RECIPE_MEASURE, recipe.getMeasure().toString());
-        intent.putExtra(RecipeDetail.RECIPE_INGREDIENT, recipe.getIngredient().toString());
-        intent.putExtra(RecipeDetail.RECIPE_DESCRIPTION, recipe.getDescription().toString());
+        intent.putExtra(RecipeDetail.RECIPE_QUANTITY, recipe.getServings());
+        /*intent.putExtra(RecipeDetail.RECIPE_MEASURE, recipe.getMeasure());
+        Log.e(TAG, "Measure: " + recipe.getMeasure());
+        intent.putExtra(RecipeDetail.RECIPE_INGREDIENT, recipe.getIngredient());
+        Log.e(TAG, "Ingredient: " + recipe.getIngredient());
+        intent.putExtra(RecipeDetail.RECIPE_DESCRIPTION, recipe.getDescription());*/
         startActivity(intent);
 
     }
