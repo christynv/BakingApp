@@ -4,17 +4,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bakingapp.model.Ingredient;
-import com.example.bakingapp.model.Recipe;
+import com.example.bakingapp.model.Steps;
 import com.example.bakingapp.utils.JsonUtils;
 import com.example.bakingapp.utils.NetworkUtils;
 
@@ -27,38 +24,57 @@ import java.util.List;
 public class RecipeDetail extends AppCompatActivity {
 
     private static String TAG = RecipeDetail.class.getSimpleName();
-    public static final String EXTRA_POSITION = "extra_position";
-    private static final int DEFAULT_POSITION = -1;
+
+    public static final String RECIPE_ID = "extra_recipe_id";
+    public static final String RECIPE_SERVING = "extra_recipe_serving";
     public static final String RECIPE_QUANTITY = "extra_recipe_quantity";
-    public static final String RECIPE_MEASURE = "extra_recipe_measure";
-    public static final String RECIPE_INGREDIENT = "extra_recipe_ingredient";
-    public static final String RECIPE_DESCRIPTION = "extra_recipe_description";
+
+    private int recipeID;
+    private TextView servingsTv;
 
     private IngredientAdapter ingredientAdapter;
     private RecyclerView ingredientRV;
     private LinearLayoutManager layoutManager;
+    private List<Ingredient> ingredientList;
 
-
-    List<Ingredient> ingredientList = new ArrayList<>();
+    private StepsAdapter stepsAdapter;
+    private RecyclerView stepsRV;
+    private LinearLayoutManager stepsLayoutManager;
+    private List<Steps> stepsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        servingsTv = (TextView) findViewById(R.id.tv_serving);
         ingredientRV = findViewById(R.id.rv_ingredient);
         layoutManager = new LinearLayoutManager(this);
         ingredientRV.setLayoutManager(layoutManager);
 
-        Intent intent = getIntent();
-        if(intent == null) {
-            finish();
-        }
+        stepsRV = findViewById(R.id.rv_description);
+        stepsLayoutManager = new LinearLayoutManager(this);
+        stepsRV.setLayoutManager(stepsLayoutManager);
 
-        new getIngredients().execute();
+        Intent intent = getIntent();
+        if(intent != null) {
+            final Bundle recipe = intent.getExtras();
+            servingsTv.setText(String.valueOf(recipe.getInt(RECIPE_SERVING, 0)));
+            recipeID = recipe.getInt(RECIPE_ID, 0);
+
+            Log.d(TAG, "Servings: " + servingsTv.getText());
+
+            new getIngredients().execute();
+            new getSteps().execute();
+         }
     }
 
     private class getIngredients extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -68,10 +84,9 @@ public class RecipeDetail extends AppCompatActivity {
                 sock.close();
 
                 String ingredientJson = NetworkUtils.getRecipeURL(MainActivity.RECIPE_URL);
-                //Log.e(MovieDetailActivity.class.getSimpleName(), "Trailer json: " + trailerJson);
 
                 if (ingredientJson != null) {
-                    ingredientList = JsonUtils.parseIngredientJson(ingredientJson);
+                    ingredientList = JsonUtils.parseIngredientJson(ingredientJson, recipeID);
                 } else {
                     return null;
                 }
@@ -84,8 +99,42 @@ public class RecipeDetail extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            ingredientAdapter = new IngredientAdapter(ingredientList);
-            ingredientRV.setAdapter(ingredientAdapter);
+            if (ingredientAdapter == null) {
+                ingredientAdapter = new IngredientAdapter(ingredientList);
+                ingredientRV.setAdapter(ingredientAdapter);
+            }
+        }
+    }
+
+    private class getSteps extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Socket sock = new Socket();
+                sock.connect(new InetSocketAddress("8.8.8.8", 53), 1500);
+                sock.close();
+
+                String stepsJson = NetworkUtils.getRecipeURL(MainActivity.RECIPE_URL);
+
+                if (stepsJson != null) {
+                    stepsList = JsonUtils.parseStepsJson(stepsJson, recipeID);
+                } else {
+                    return null;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            if (stepsAdapter == null) {
+                stepsAdapter = new StepsAdapter(stepsList);
+                stepsRV.setAdapter(stepsAdapter);
+            }
         }
     }
 }

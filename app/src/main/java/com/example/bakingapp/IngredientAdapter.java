@@ -1,6 +1,7 @@
 package com.example.bakingapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,9 @@ import java.util.List;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
 
-    List<Ingredient> ingredientList;
-    Ingredient recipeIngredients;
+    private static String TAG = IngredientAdapter.class.getSimpleName();
+    private List<Ingredient> ingredientList;
+    private Ingredient recipeIngredients;
 
     public IngredientAdapter(List<Ingredient> ingredientList) {
         this.ingredientList = ingredientList;
@@ -59,9 +61,11 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             recipeIngredientView = itemView.findViewById(R.id.tv_ingredient);
         }
 
-        void bind(final Ingredient recipeIngredients) {
-            String ingredientQuantity = Double.toString(recipeIngredients.getQuantity());
-            recipeQuantityView.setText(ingredientQuantity);
+        void bind(Ingredient recipeIngredients) {
+            Log.e(TAG, "Quantity: " + recipeIngredients.getQuantity());
+            Log.e(TAG, "Measure: " + recipeIngredients.getMeasure());
+            Log.e(TAG, "Ingredient: " + recipeIngredients.getIngredient());
+            recipeQuantityView.setText(String.valueOf(recipeIngredients.getQuantity()));
             recipeMeasureView.setText(recipeIngredients.getMeasure());
             recipeIngredientView.setText(recipeIngredients.getIngredient());
         }

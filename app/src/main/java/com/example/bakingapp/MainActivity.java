@@ -50,13 +50,8 @@ public class MainActivity extends AppCompatActivity
     public void onListItemClick(Recipe recipe) {
         Intent intent = new Intent(this, RecipeDetail.class);
         intent.putExtra(RecipeDetail.RECIPE_QUANTITY, recipe.getServings());
-        /*intent.putExtra(RecipeDetail.RECIPE_MEASURE, recipe.getMeasure());
-        Log.e(TAG, "Measure: " + recipe.getMeasure());
-        intent.putExtra(RecipeDetail.RECIPE_INGREDIENT, recipe.getIngredient());
-        Log.e(TAG, "Ingredient: " + recipe.getIngredient());
-        intent.putExtra(RecipeDetail.RECIPE_DESCRIPTION, recipe.getDescription());*/
+        //Log.e(TAG, "Recipe Servings: " + recipe.getServings());
         startActivity(intent);
-
     }
 
     private class getRecipes extends AsyncTask<Void, Void, Void> {

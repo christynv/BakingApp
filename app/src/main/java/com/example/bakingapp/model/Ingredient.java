@@ -18,18 +18,6 @@ public class Ingredient {
         this.ingredient = ingredient;
     }
 
-    /*public List<Double> getQuantity() {return quantity;}
-
-    public void setQuantity(List<Double> quantity) {this.quantity = quantity;}
-
-    public List<String> getMeasure() {return measure;}
-
-    public void setMeasure(List<String> measure) {this.measure = measure;}
-
-    public List<String> getIngredient() {return ingredient;}
-
-    public void setIngredient(List<String> ingredient) {this.ingredient = ingredient;}*/
-
     public double getQuantity() {return quantity;}
 
     public void setQuantity(double quantity) {this.quantity = quantity;}

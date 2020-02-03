@@ -6,22 +6,15 @@ public class Recipe {
 
     private int id;
     private String recipeName;
-    private List<String> description;
-    private List<String> videoURL;
-    private String thumbnailURL;
     private int servings;
 
     public Recipe() {
 
     }
 
-    public Recipe(int id, String recipeName, List<String> description, List<String> videoURL,
-                  String thumbnailURL, int servings) {
+    public Recipe(int id, String recipeName, int servings) {
         this.id = id;
         this.recipeName = recipeName;
-        this.description = description;
-        this.videoURL = videoURL;
-        this.thumbnailURL = thumbnailURL;
         this.servings = servings;
     }
 
@@ -32,18 +25,6 @@ public class Recipe {
     public String getRecipeName() {return recipeName;}
 
     public void setRecipeName(String recipeName) {this.recipeName = recipeName;}
-
-    public List<String> getDescription() {return description;}
-
-    public void setDescription(List<String> description) {this.description = description;}
-
-    public List<String> getVideoURL() {return videoURL;}
-
-    public void setVideoURL(List<String> videoURL) {this.videoURL = videoURL;}
-
-    public String getThumbnailURL() {return thumbnailURL;}
-
-    public void setThumbnailURL(String thumbnailURL) {this.thumbnailURL = thumbnailURL;}
 
     public int getServings() {return servings;}
 
