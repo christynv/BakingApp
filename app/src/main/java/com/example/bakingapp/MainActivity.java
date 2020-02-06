@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListItemClick(Recipe recipe) {
         Intent intent = new Intent(this, RecipeDetail.class);
-        intent.putExtra(RecipeDetail.RECIPE_QUANTITY, recipe.getServings());
+        intent.putExtra(RecipeDetail.RECIPE_ID, recipe.getId());
+        intent.putExtra(RecipeDetail.RECIPE_SERVING, recipe.getServings());
         //Log.e(TAG, "Recipe Servings: " + recipe.getServings());
         startActivity(intent);
     }

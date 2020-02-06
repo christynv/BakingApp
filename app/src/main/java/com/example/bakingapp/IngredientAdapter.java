@@ -61,7 +61,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             recipeIngredientView = itemView.findViewById(R.id.tv_ingredient);
         }
 
-        void bind(Ingredient recipeIngredients) {
+        void bind(final Ingredient recipeIngredients) {
             Log.e(TAG, "Quantity: " + recipeIngredients.getQuantity());
             Log.e(TAG, "Measure: " + recipeIngredients.getMeasure());
             Log.e(TAG, "Ingredient: " + recipeIngredients.getIngredient());

@@ -62,7 +62,7 @@ public class RecipeDetail extends AppCompatActivity {
             servingsTv.setText(String.valueOf(recipe.getInt(RECIPE_SERVING, 0)));
             recipeID = recipe.getInt(RECIPE_ID, 0);
 
-            Log.d(TAG, "Servings: " + servingsTv.getText());
+            Log.d(TAG, "Recipe ID: " + recipeID);
 
             new getIngredients().execute();
             new getSteps().execute();
@@ -86,7 +86,8 @@ public class RecipeDetail extends AppCompatActivity {
                 String ingredientJson = NetworkUtils.getRecipeURL(MainActivity.RECIPE_URL);
 
                 if (ingredientJson != null) {
-                    ingredientList = JsonUtils.parseIngredientJson(ingredientJson, recipeID);
+                    ingredientList = JsonUtils.parseIngredientJson(ingredientJson);
+                    Log.e(TAG, "Ingredients List: " + ingredientList.size());
                 } else {
                     return null;
                 }
@@ -118,7 +119,7 @@ public class RecipeDetail extends AppCompatActivity {
                 String stepsJson = NetworkUtils.getRecipeURL(MainActivity.RECIPE_URL);
 
                 if (stepsJson != null) {
-                    stepsList = JsonUtils.parseStepsJson(stepsJson, recipeID);
+                    stepsList = JsonUtils.parseStepsJson(stepsJson);
                 } else {
                     return null;
                 }
