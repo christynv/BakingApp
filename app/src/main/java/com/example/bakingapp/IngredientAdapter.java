@@ -27,7 +27,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     @Override
     public IngredientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        int layoutIdForListItem = R.layout.activity_detail;
+        int layoutIdForListItem = R.layout.ingredient_item;
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View view = inflater.inflate(layoutIdForListItem, parent, false);
@@ -62,9 +62,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         }
 
         void bind(final Ingredient recipeIngredients) {
-            Log.e(TAG, "Quantity: " + recipeIngredients.getQuantity());
-            Log.e(TAG, "Measure: " + recipeIngredients.getMeasure());
-            Log.e(TAG, "Ingredient: " + recipeIngredients.getIngredient());
             recipeQuantityView.setText(String.valueOf(recipeIngredients.getQuantity()));
             recipeMeasureView.setText(recipeIngredients.getMeasure());
             recipeIngredientView.setText(recipeIngredients.getIngredient());

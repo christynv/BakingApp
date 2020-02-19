@@ -26,6 +26,7 @@ public class RecipeDetail extends AppCompatActivity {
     private static String TAG = RecipeDetail.class.getSimpleName();
 
     public static final String RECIPE_ID = "extra_recipe_id";
+    public static final String RECIPE_NAME = "extra_recipe_name";
     public static final String RECIPE_SERVING = "extra_recipe_serving";
     public static final String RECIPE_QUANTITY = "extra_recipe_quantity";
 
@@ -59,9 +60,9 @@ public class RecipeDetail extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent != null) {
             final Bundle recipe = intent.getExtras();
-            servingsTv.setText(String.valueOf(recipe.getInt(RECIPE_SERVING, 0)));
             recipeID = recipe.getInt(RECIPE_ID, 0);
-
+            servingsTv.setText(String.valueOf(recipe.getInt(RECIPE_SERVING, 0)));
+            setTitle(recipe.getString(RECIPE_NAME, "Baking App"));
             Log.d(TAG, "Recipe ID: " + recipeID);
 
             new getIngredients().execute();
@@ -86,8 +87,7 @@ public class RecipeDetail extends AppCompatActivity {
                 String ingredientJson = NetworkUtils.getRecipeURL(MainActivity.RECIPE_URL);
 
                 if (ingredientJson != null) {
-                    ingredientList = JsonUtils.parseIngredientJson(ingredientJson);
-                    Log.e(TAG, "Ingredients List: " + ingredientList.size());
+                    ingredientList = JsonUtils.parseIngredientJson(ingredientJson, recipeID);
                 } else {
                     return null;
                 }
@@ -119,7 +119,7 @@ public class RecipeDetail extends AppCompatActivity {
                 String stepsJson = NetworkUtils.getRecipeURL(MainActivity.RECIPE_URL);
 
                 if (stepsJson != null) {
-                    stepsList = JsonUtils.parseStepsJson(stepsJson);
+                    stepsList = JsonUtils.parseStepsJson(stepsJson, recipeID);
                 } else {
                     return null;
                 }

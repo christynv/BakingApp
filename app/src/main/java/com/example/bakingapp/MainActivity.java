@@ -28,10 +28,10 @@ public class MainActivity extends AppCompatActivity
     private String TAG = MainActivity.class.getSimpleName();
 
     public static final String RECIPE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+    public static List<Recipe> recipeList;
     private RecyclerView recipeRecyclerView;
     private LinearLayoutManager layoutManager;
     private Recipe recipe;
-    private List<Recipe> recipeList;
     private RecipeAdapter recipeAdapter;
 
     @Override
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     public void onListItemClick(Recipe recipe) {
         Intent intent = new Intent(this, RecipeDetail.class);
         intent.putExtra(RecipeDetail.RECIPE_ID, recipe.getId());
+        intent.putExtra(RecipeDetail.RECIPE_NAME, recipe.getRecipeName());
         intent.putExtra(RecipeDetail.RECIPE_SERVING, recipe.getServings());
         //Log.e(TAG, "Recipe Servings: " + recipe.getServings());
         startActivity(intent);

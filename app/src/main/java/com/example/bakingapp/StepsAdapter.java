@@ -22,7 +22,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DescriptionH
     @Override
     public DescriptionHolder onCreateViewHolder( ViewGroup parent, int viewType) {
         Context context = parent.getContext();
-        int layoutIdForListItem = R.layout.activity_detail;
+        int layoutIdForListItem = R.layout.step_item;
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View view = inflater.inflate(layoutIdForListItem, parent, false);
