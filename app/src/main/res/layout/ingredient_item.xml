@@ -8,18 +8,18 @@
         android:id="@+id/tv_quantity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp" />
+        android:padding="4dp" />
 
     <TextView
         android:id="@+id/tv_measure"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp" />
+        android:padding="4dp" />
 
     <TextView
         android:id="@+id/tv_ingredient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp" />
+        android:padding="4dp" />
 
 </LinearLayout>

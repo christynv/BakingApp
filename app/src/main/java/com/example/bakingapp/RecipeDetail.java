@@ -1,10 +1,15 @@
 package com.example.bakingapp;
 
+import android.app.MediaRouteButton;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +23,6 @@ import com.example.bakingapp.utils.NetworkUtils;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeDetail extends AppCompatActivity {
@@ -28,7 +32,6 @@ public class RecipeDetail extends AppCompatActivity {
     public static final String RECIPE_ID = "extra_recipe_id";
     public static final String RECIPE_NAME = "extra_recipe_name";
     public static final String RECIPE_SERVING = "extra_recipe_serving";
-    public static final String RECIPE_QUANTITY = "extra_recipe_quantity";
 
     private int recipeID;
     private TextView servingsTv;

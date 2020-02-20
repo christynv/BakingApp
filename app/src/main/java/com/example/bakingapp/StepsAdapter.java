@@ -46,15 +46,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DescriptionH
     public class DescriptionHolder extends RecyclerView.ViewHolder {
 
         TextView shortDescriptionView;
-        TextView descriptionView;
-        TextView videoURLView;
 
         public DescriptionHolder(View itemView) {
             super(itemView);
-            descriptionView = itemView.findViewById(R.id.tv_description);
+            shortDescriptionView = itemView.findViewById(R.id.tv_short_description);
         }
         void bind(final Steps recipeSteps) {
-            descriptionView.setText(recipeSteps.getDescription());
+            shortDescriptionView.setText(recipeSteps.getShortDescription());
         }
     }
 }
