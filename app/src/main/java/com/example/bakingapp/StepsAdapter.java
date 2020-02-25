@@ -14,9 +14,15 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DescriptionH
 
     private List<Steps> stepsList;
     private Steps recipeSteps;
+    private final ListItemClickListener mOnClickListener;
 
-    public StepsAdapter(List<Steps> stepsList) {
+    public interface ListItemClickListener {
+        void onListItemClick(Steps steps);
+    }
+
+    public StepsAdapter(List<Steps> stepsList, ListItemClickListener listener) {
         this.stepsList = stepsList;
+        mOnClickListener = listener;
     }
 
     @Override
@@ -53,6 +59,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DescriptionH
         }
         void bind(final Steps recipeSteps) {
             shortDescriptionView.setText(recipeSteps.getShortDescription());
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    mOnClickListener.onListItemClick(recipeSteps);
+                }
+            });
         }
     }
 }

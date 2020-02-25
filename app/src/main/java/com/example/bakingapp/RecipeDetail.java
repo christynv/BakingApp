@@ -25,7 +25,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.List;
 
-public class RecipeDetail extends AppCompatActivity {
+public class RecipeDetail extends AppCompatActivity
+        implements StepsAdapter.ListItemClickListener{
 
     private static String TAG = RecipeDetail.class.getSimpleName();
 
@@ -51,7 +52,7 @@ public class RecipeDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        servingsTv = (TextView) findViewById(R.id.tv_serving);
+        servingsTv = findViewById(R.id.tv_serving);
         ingredientRV = findViewById(R.id.rv_ingredient);
         layoutManager = new LinearLayoutManager(this);
         ingredientRV.setLayoutManager(layoutManager);
@@ -71,6 +72,14 @@ public class RecipeDetail extends AppCompatActivity {
             new getIngredients().execute();
             new getSteps().execute();
          }
+    }
+
+    @Override
+    public void onListItemClick(Steps steps) {
+        Intent intent = new Intent(this, DescriptionDetail.class);
+        intent.putExtra(DescriptionDetail.DESCRIPTION_TEXT, steps.getDescription());
+        intent.putExtra(DescriptionDetail.DESCRIPTION_VIDEO, steps.getVideoURL());
+        startActivity(intent);
     }
 
     private class getIngredients extends AsyncTask<Void, Void, Void> {
@@ -136,7 +145,7 @@ public class RecipeDetail extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (stepsAdapter == null) {
-                stepsAdapter = new StepsAdapter(stepsList);
+                stepsAdapter = new StepsAdapter(stepsList, RecipeDetail.this);
                 stepsRV.setAdapter(stepsAdapter);
             }
         }
