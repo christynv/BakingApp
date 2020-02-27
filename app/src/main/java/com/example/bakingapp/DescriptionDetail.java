@@ -1,6 +1,8 @@
 package com.example.bakingapp;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -40,19 +42,21 @@ public class DescriptionDetail extends AppCompatActivity {
         descriptionTv = findViewById(R.id.tv_description);
 
         Intent intent = getIntent();
-        if(intent != null) {
+        if (intent != null) {
             final Bundle steps = intent.getExtras();
             descriptionTv.setText(steps.getString(DESCRIPTION_TEXT, "description"));
             String videoURL = steps.getString(DESCRIPTION_VIDEO, "URL");
             Log.e(TAG, "^^^^DESCR VIDEO URL^^^^^" + videoURL);
 
-            exoPlayer = new SimpleExoPlayer.Builder(this).build();
-            playerView.setPlayer(exoPlayer);
-            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
-                    Util.getUserAgent(this, "BakingApp"));
-            MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(videoURL));
-            exoPlayer.prepare(videoSource);
+            if (exoPlayer == null) {
+                exoPlayer = new SimpleExoPlayer.Builder(this).build();
+                playerView.setPlayer(exoPlayer);
+                DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
+                        Util.getUserAgent(this, "BakingApp"));
+                MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
+                        .createMediaSource(Uri.parse(videoURL));
+                exoPlayer.prepare(videoSource);
+            } else exoPlayer = null;
         }
     }
 }

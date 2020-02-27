@@ -9,6 +9,7 @@
         android:id="@+id/playerView"
         android:layout_width="0dp"
         android:layout_height="256dp"
+        app:controller_layout_id="@layout/exo_playback_control_view"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="0dp"
         android:layout_marginRight="0dp"
