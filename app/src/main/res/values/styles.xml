@@ -8,4 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DetailLabel" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="Item" parent="@style/TextAppearance.AppCompat.Subhead">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
 </resources>

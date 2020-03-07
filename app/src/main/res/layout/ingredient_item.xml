@@ -6,20 +6,14 @@
 
     <TextView
         android:id="@+id/tv_quantity"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="4dp" />
+        style="@style/Item"/>
 
     <TextView
         android:id="@+id/tv_measure"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="4dp" />
+        style="@style/Item" />
 
     <TextView
         android:id="@+id/tv_ingredient"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="4dp" />
+        style="@style/Item"/>
 
 </LinearLayout>
